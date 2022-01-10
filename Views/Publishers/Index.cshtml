@@ -1,0 +1,112 @@
+﻿@model ProiectMedii.Models.MusicViewModels.PublisherIndexData;
+
+@{
+    ViewData["Title"] = "Publishers";
+}
+<h2>Publishers</h2>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Publisher Name</th>
+            <th>Adress</th>
+            <th>Albums</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Publishers)
+        {
+            string selectedRow = "";
+            if (item.ID == (int?)ViewData["PublisherID"])
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @Html.DisplayFor(modelItem => item.PublisherName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adress)
+                </td>
+
+                <td>
+                    @{
+                        foreach (var album in item.PublishedAlbums)
+                        {
+                            @album.Album.ID @: @album.Album.Title <br />
+                        }
+                    }
+                </td>
+                <td>
+                    <a asp-action="Index" asp-route-id="@item.ID">Select</a> |
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model.Albums != null)
+{
+    <h3>Albums Published by Selected Publisher</h3>
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Price</th>
+        </tr>
+        @foreach (var item in Model.Albums)
+        {
+            string selectedRow = "";
+            if (item.ID == (int?)ViewData["AlbumID"])
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @Html.ActionLink("Select", "Index", new { albumID = item.ID })
+                </td>
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    @item.SongsWriter
+                </td>
+                <td>
+                    @item.Price
+                </td>
+            </tr>
+        }
+        
+    </table>
+}
+
+        @if (Model.Orders != null)
+        {
+            <h3>
+                Customers that have ordered the Selected Book
+            </h3>
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Order Date</th>
+                </tr>
+                @foreach (var item in Model.Orders)
+                {
+                    <tr>
+                        <td>
+                            @item.Customer.Name
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderDate)
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
