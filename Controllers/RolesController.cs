@@ -10,7 +10,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ProiectMedii.Controllers
 {
-   // [Authorize( Roles= "Admin")]
+   [Authorize( Policy = "Admin")]
+
     public class RolesController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;

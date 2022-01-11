@@ -11,7 +11,7 @@ using ProiectMedii.Models;
 
 namespace ProiectMedii.Controllers
 {
-   // [Authorize(Roles = "Employee")]
+   [Authorize(Policy  = "Employee")]
     public class AlbumsController : Controller
     {
         private readonly LibraryContext _context;
@@ -22,7 +22,7 @@ namespace ProiectMedii.Controllers
         }
 
         // GET: Albums
-        [AllowAnonymous]
+       // [AllowAnonymous]
         public async Task<IActionResult> Index(string sortOrder,string currentFilter,string searchString,int? pageNumber)
         {
             ViewData["CurrentSort"] = sortOrder;
@@ -60,7 +60,7 @@ namespace ProiectMedii.Controllers
         }
 
         // GET: Albums/Details/5
-        [AllowAnonymous]
+       // [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

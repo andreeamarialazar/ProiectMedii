@@ -40,16 +40,23 @@ namespace ProiectMedii
 
             services.AddAuthorization(opts => {
                 opts.AddPolicy("Admin", policy => {
-                    policy.RequireClaim("Admin", "Admin");
+                    policy.RequireRole("Admin");
                 });
             });
+
+            services.AddAuthorization(opts => {
+                opts.AddPolicy("Employee", policy => {
+                    policy.RequireRole("Employee");
+                });
+            });
+
 
             services.AddRazorPages();
 
             services.AddAuthorization(opts => {
                 opts.AddPolicy("ResponsibleWithPublishers", policy => {
                     policy.RequireRole("Manager");
-                    policy.RequireClaim("Department", "Business");
+                    policy.RequireClaim("Department", "Sales");
                 });
             });
         }

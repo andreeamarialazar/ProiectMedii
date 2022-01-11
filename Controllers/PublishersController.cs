@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ProiectMedii.Controllers
 {
-  //  [Authorize(Policy = "ResponsibleWithPublishers")]
+   [Authorize(Policy = "ResponsibleWithPublishers")]
     public class PublishersController : Controller
     {
         private readonly LibraryContext _context;

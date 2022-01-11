@@ -24,7 +24,7 @@ namespace ProiectMedii.Controllers
         /***
          *CREATE METHOD
          ***/
-        public ViewResult Create() => View();
+        public ViewResult Create() => View(User?.Claims);
 
         [HttpPost]
         [ActionName("Create")]
@@ -32,11 +32,11 @@ namespace ProiectMedii.Controllers
        string claimValue)
         {
             IdentityUser user = await userManager.GetUserAsync(HttpContext.User);
-            Claim claim = new(claimType, claimValue, ClaimValueTypes.String);
+            Claim claim = new Claim(claimType, claimValue, ClaimValueTypes.String);
             IdentityResult result = await userManager.AddClaimAsync(user,
            claim);
             if (result.Succeeded)
-                return RedirectToAction("Index");
+                return RedirectToAction("Index",claim);
             else
                 Errors(result);
             return View();
